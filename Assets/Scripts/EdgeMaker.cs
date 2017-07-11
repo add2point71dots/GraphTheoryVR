@@ -41,9 +41,7 @@ public class EdgeMaker : MonoBehaviour {
 	}
 
 	void endEdge(object sender, ClickedEventArgs e) {
-		Debug.Log ("drawingedge is: " + drawingEdge);
 		if (drawingEdge) {
-			Debug.Log ("DRAWING AN EDGE");
 			RaycastHit hit;
 			Ray ray = new Ray(transform.position, transform.forward);
 			if (Physics.Raycast (ray, out hit, 0.1f) && edgeController.start != hit.transform) {
@@ -53,7 +51,6 @@ public class EdgeMaker : MonoBehaviour {
 			}
 		}
 		drawingEdge = false;
-		Debug.Log ("UNGRIPPING");
 	}
 
 
