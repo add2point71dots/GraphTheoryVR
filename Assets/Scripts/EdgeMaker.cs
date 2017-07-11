@@ -15,11 +15,18 @@ public class EdgeMaker : MonoBehaviour {
 	
 	// Update is called once per frame
 	void startEdge(object sender, ClickedEventArgs e) {
-		
+		Debug.Log ("GRIPPING");
+		RaycastHit hit;
+		Ray ray = new Ray(transform.position, transform.forward);
+		if (Physics.Raycast (ray, out hit, 0.1f)) {
+			Debug.Log ("I've hit something!");
+		} else {
+			Debug.Log ("no hits!");
+		}
 	}
 
 	void endEdge(object sender, ClickedEventArgs e) {
-		
+		Debug.Log ("UNGRIPPING");
 	}
 
 
