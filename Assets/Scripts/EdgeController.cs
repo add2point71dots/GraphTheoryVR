@@ -10,9 +10,6 @@ public class EdgeController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		line = GetComponent<LineRenderer>();
-		Debug.Log("IN DRAW EDGE");
-		Debug.Log("start: " + start);
-		Debug.Log("end: " + end);
 	}
 	
 	// Update is called once per frame
