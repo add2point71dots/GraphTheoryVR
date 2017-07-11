@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MakeNodes : MonoBehaviour {
+public class NodeSpawner : MonoBehaviour {
 	private SteamVR_TrackedController device;
 	public GameObject node;
 	public Transform nodeSpawn;
