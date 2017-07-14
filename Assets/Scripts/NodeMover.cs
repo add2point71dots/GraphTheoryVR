@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NodeMover : MonoBehaviour {
 	private SteamVR_TrackedController device;
-	GameObject grabbedObject;
-	float grabbedObjectSize;
+	private GameObject grabbedObject;
+	public float grabRadius;
 
 	void Start () {
 		device = GetComponent<SteamVR_TrackedController>();
@@ -14,7 +14,7 @@ public class NodeMover : MonoBehaviour {
 	}
 
 	void grabNode(object sender, ClickedEventArgs e) {
-		Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, 0.1f);
+		Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, grabRadius);
 		Debug.Log ("I found " + nearbyNodes.Length + " nearby nodes.");
 
 		grabbedObject = FindNearestNode (nearbyNodes);
@@ -28,7 +28,6 @@ public class NodeMover : MonoBehaviour {
 	}
 
 	GameObject FindNearestNode(Collider[] nearbyNodes) {
-		Debug.Log ("finding nearest!");
 		GameObject nearestNode = nearbyNodes[0].gameObject;
 		float smallestDist = 500f;
 		bool foundNode = false;
@@ -42,19 +41,13 @@ public class NodeMover : MonoBehaviour {
 				if (tempDist < smallestDist) {
 					smallestDist = tempDist;
 					nearestNode = tempNode;
-					Debug.Log ("smallest dist is " + smallestDist);
-
-
 				}
 				foundNode = true;
-				Debug.Log ("smallest distance is " + smallestDist);
-				Debug.Log ("nearest node type is: " + nearestNode.GetType());
 			}
 
 		}
 
 		if (foundNode) {
-			Debug.Log ("I found a node!");
 			return nearestNode;
 		}
 		return null;
