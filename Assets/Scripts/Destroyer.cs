@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Destroyer : MonoBehaviour {
 	private SteamVR_TrackedController device;
-	public float destroyRadius;
 
 	void Start () {
 		device = GetComponent<SteamVR_TrackedController>();
