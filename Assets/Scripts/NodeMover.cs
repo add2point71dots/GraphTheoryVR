@@ -23,8 +23,6 @@ public class NodeMover : MonoBehaviour {
 
 	void dropNode(object sender, ClickedEventArgs e) {
 		grabbedObject.transform.parent = null;
-		Debug.Log ("Tryan DROP");
-		
 	}
 
 	GameObject FindNearestNode(Collider[] nearbyNodes) {
@@ -44,7 +42,6 @@ public class NodeMover : MonoBehaviour {
 				}
 				foundNode = true;
 			}
-
 		}
 
 		if (foundNode) {
