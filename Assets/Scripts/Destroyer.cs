@@ -16,7 +16,13 @@ public class Destroyer : MonoBehaviour {
 		Ray ray = new Ray(transform.position, transform.forward);
 
 		if (Physics.Raycast (ray, out hit, 100f)) {
-			Destroy (hit.transform.gameObject);
+			GameObject hitObj = hit.transform.gameObject;
+
+			Debug.Log ("hit is a:" + hit.transform.gameObject.GetType ());
+
+			if (hitObj.tag == "Node" || hitObj.tag == "Edge") {
+				Destroy (hitObj);
+			}
 		}
 	}
 }
