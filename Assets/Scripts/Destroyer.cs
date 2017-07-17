@@ -21,6 +21,12 @@ public class Destroyer : MonoBehaviour {
 			Debug.Log ("hit is a:" + hit.transform.gameObject.GetType ());
 
 			if (hitObj.tag == "Node" || hitObj.tag == "Edge") {
+				if (hitObj.tag == "Node") {
+					NodeConnections nodeConnections = hitObj.GetComponent<NodeConnections>();
+					for (int i = 0; i < nodeConnections.connectedEdges.Count; i++) {
+						Destroy(nodeConnections.connectedEdges[i]);
+					}
+				}
 				Destroy (hitObj);
 			}
 		}
