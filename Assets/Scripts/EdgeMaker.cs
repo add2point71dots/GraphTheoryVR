@@ -33,6 +33,9 @@ public class EdgeMaker : MonoBehaviour {
 				lineStart = hit.transform;
 				lineEnd = transform;
 
+				startNode = hitObject;
+				startNodeConnections = hitObject.GetComponent<NodeConnections> ();
+
 				edgeDrawing = Instantiate (edge);
 				edgeController = edgeDrawing.GetComponent<EdgeController> ();
 				edgeController.start = lineStart;
@@ -50,8 +53,19 @@ public class EdgeMaker : MonoBehaviour {
 		if (drawingEdge) {
 			RaycastHit hit;
 			Ray ray = new Ray(transform.position, transform.forward);
-			if (Physics.Raycast (ray, out hit, 0.1f) && edgeController.start != hit.transform) {
+			if (Physics.Raycast (ray, out hit, 0.1f) && edgeController.start != hit.transform && hit.transform.gameObject.tag == "Node") {
 				edgeController.end = hit.transform;
+
+				endNode = hit.transform.gameObject;
+				endNodeConnections = hit.transform.gameObject.GetComponent<NodeConnections> ();
+
+				startNodeConnections.connectedEdges.Add (edgeDrawing);
+				endNodeConnections.connectedEdges.Add (edgeDrawing);
+
+				startNodeConnections.adjacentNodes.Add (endNode);
+				endNodeConnections.adjacentNodes.Add (startNode);
+
+
 			} else {
 				Destroy (edgeDrawing);
 			}
