@@ -13,6 +13,8 @@ public class EdgeMaker : MonoBehaviour {
 	private GameObject endNode;
 	private NodeConnections startNodeConnections;
 	private NodeConnections endNodeConnections;
+	private GameObject selectedNode;
+	public float selectRadius;
 
 	void Start () {
 		drawingEdge = false;
@@ -24,35 +26,31 @@ public class EdgeMaker : MonoBehaviour {
 	
 	// Update is called once per frame
 	void startEdge(object sender, ClickedEventArgs e) {
-		RaycastHit hit;
-		Ray ray = new Ray(transform.position, transform.forward);
-		if (Physics.Raycast (ray, out hit, 0.1f)) {
-			GameObject hitObject = hit.transform.gameObject;
-			if (hitObject.tag == "Node") {
-				startNode = hitObject;
-				startNodeConnections = hitObject.GetComponent<NodeConnections> ();
+		Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, selectRadius);
+		selectedNode = FindNearestNode (nearbyNodes);
 
-				edgeDrawing = Instantiate (edge);
-				edgeController = edgeDrawing.GetComponent<EdgeController> ();
-				edgeController.start = startNode;
-				edgeController.end = controller;
+		if (selectedNode) {
+			startNode = selectedNode;
+			startNodeConnections = startNode.GetComponent<NodeConnections> ();
 
-				drawingEdge = true;
-				Debug.Log ("I've hit something!");
-			}
-		} else {
-			Debug.Log ("no hits!");
+			edgeDrawing = Instantiate (edge);
+			edgeController = edgeDrawing.GetComponent<EdgeController> ();
+			edgeController.start = startNode;
+			edgeController.end = controller;
+
+			drawingEdge = true;
 		}
 	}
 
 	void endEdge(object sender, ClickedEventArgs e) {
 		if (drawingEdge) {
-			RaycastHit hit;
-			Ray ray = new Ray(transform.position, transform.forward);
-			if (Physics.Raycast (ray, out hit, 0.1f) && edgeController.start != hit.transform.gameObject && hit.transform.gameObject.tag == "Node") {
-				endNode = hit.transform.gameObject;
+			Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, selectRadius);
+			selectedNode = FindNearestNode (nearbyNodes);
+			
+			if (selectedNode) {
+				endNode = selectedNode;
 				edgeController.end = endNode;
-					
+
 				endNodeConnections = endNode.GetComponent<NodeConnections> ();
 
 				startNodeConnections.connectedEdges.Add (edgeDrawing);
@@ -60,8 +58,6 @@ public class EdgeMaker : MonoBehaviour {
 
 				startNodeConnections.adjacentNodes.Add (endNode);
 				endNodeConnections.adjacentNodes.Add (startNode);
-
-
 			} else {
 				Destroy (edgeDrawing);
 			}
@@ -69,5 +65,29 @@ public class EdgeMaker : MonoBehaviour {
 		drawingEdge = false;
 	}
 
+	GameObject FindNearestNode(Collider[] nearbyNodes) {
+		GameObject nearestNode = nearbyNodes[0].gameObject;
+		float smallestDist = 500f;
+		bool foundNode = false;
+		GameObject tempNode;
+		float tempDist;
+
+		for (int i = 0; i < nearbyNodes.Length; i++) {
+			if (nearbyNodes [i].tag == "Node") {
+				tempNode = nearbyNodes [i].gameObject; 
+				tempDist = (tempNode.transform.position - transform.position).sqrMagnitude;
+				if (tempDist < smallestDist) {
+					smallestDist = tempDist;
+					nearestNode = tempNode;
+				}
+				foundNode = true;
+			}
+		}
+
+		if (foundNode) {
+			return nearestNode;
+		}
+		return null;
+	}
 
 }

@@ -15,8 +15,6 @@ public class NodeMover : MonoBehaviour {
 
 	void grabNode(object sender, ClickedEventArgs e) {
 		Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, grabRadius);
-		Debug.Log ("I found " + nearbyNodes.Length + " nearby nodes.");
-
 		grabbedObject = FindNearestNode (nearbyNodes);
 		grabbedObject.transform.parent = transform;
 	}
