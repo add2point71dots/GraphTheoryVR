@@ -18,7 +18,7 @@ public class EdgeMaker : MonoBehaviour {
 
 	void Start () {
 		drawingEdge = false;
-		device = GetComponent<SteamVR_TrackedController>();
+		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
 		device.Gripped += startEdge;
 		device.Ungripped += endEdge;
 		controller = transform.gameObject;
@@ -66,6 +66,8 @@ public class EdgeMaker : MonoBehaviour {
 	}
 
 	GameObject FindNearestNode(Collider[] nearbyNodes) {
+		if (nearbyNodes.Length == 0)
+			return null;
 		GameObject nearestNode = nearbyNodes[0].gameObject;
 		float smallestDist = 500f;
 		bool foundNode = false;

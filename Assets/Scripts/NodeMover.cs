@@ -8,7 +8,7 @@ public class NodeMover : MonoBehaviour {
 	public float grabRadius;
 
 	void Start () {
-		device = GetComponent<SteamVR_TrackedController>();
+		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
 		device.PadClicked += grabNode;
 		device.PadUnclicked += dropNode;
 	}
@@ -16,14 +16,20 @@ public class NodeMover : MonoBehaviour {
 	void grabNode(object sender, ClickedEventArgs e) {
 		Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, grabRadius);
 		grabbedObject = FindNearestNode (nearbyNodes);
-		grabbedObject.transform.parent = transform;
+
+		if (grabbedObject)
+			grabbedObject.transform.parent = gameObject.transform.parent.transform;
+
 	}
 
 	void dropNode(object sender, ClickedEventArgs e) {
-		grabbedObject.transform.parent = null;
+		if (grabbedObject)
+			grabbedObject.transform.parent = null;
 	}
 
 	GameObject FindNearestNode(Collider[] nearbyNodes) {
+		if (nearbyNodes.Length == 0)
+			return null;
 		GameObject nearestNode = nearbyNodes[0].gameObject;
 		float smallestDist = 500f;
 		bool foundNode = false;

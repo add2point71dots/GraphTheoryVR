@@ -8,7 +8,7 @@ public class NodeSpawner : MonoBehaviour {
 	public Transform nodeSpawn;
 
 	void Start() {
-		device = GetComponent<SteamVR_TrackedController>();
+		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
 		device.TriggerClicked += MakeNode;
 	}
 
