@@ -43,11 +43,24 @@ public class EdgeMaker : MonoBehaviour {
 	}
 
 	void endEdge(object sender, ClickedEventArgs e) {
+		bool drawingNewEdge = true;
 		if (drawingEdge) {
 			Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, selectRadius);
 			selectedNode = FindNearestNode (nearbyNodes);
-			
-			if (selectedNode) {
+			GameObject[] allEdges = GameObject.FindGameObjectsWithTag ("Edge");
+
+			foreach (GameObject edge in allEdges) {
+				EdgeController otherEdgeController = edge.GetComponent<EdgeController> ();
+
+				bool duplicate1 = otherEdgeController.start == edgeController.start && otherEdgeController.end == selectedNode;
+				bool duplicate2 = otherEdgeController.end == edgeController.start && otherEdgeController.start == selectedNode;
+
+				if (duplicate1 || duplicate2) {
+					drawingNewEdge = false;
+					break;
+				}
+			}
+			if (selectedNode && drawingNewEdge) {
 				endNode = selectedNode;
 				edgeController.end = endNode;
 

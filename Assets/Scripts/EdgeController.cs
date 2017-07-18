@@ -12,7 +12,7 @@ public class EdgeController : MonoBehaviour {
 	void Start () {
 		line = GetComponent<LineRenderer>();
 		collider = gameObject.AddComponent <CapsuleCollider> ();
-		collider.radius = 0.05f;
+		collider.radius = 0.03f;
 		collider.isTrigger = true;
 		collider.direction = 2;
 	}
