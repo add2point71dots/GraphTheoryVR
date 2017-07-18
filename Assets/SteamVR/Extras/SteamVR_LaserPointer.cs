@@ -31,6 +31,7 @@ public class SteamVR_LaserPointer : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+		active = false;
         holder = new GameObject();
         holder.transform.parent = this.transform;
         holder.transform.localPosition = Vector3.zero;
@@ -64,6 +65,7 @@ public class SteamVR_LaserPointer : MonoBehaviour
 	}
 
     public virtual void OnPointerIn(PointerEventArgs e)
+
     {
         if (PointerIn != null)
             PointerIn(this, e);
@@ -79,6 +81,7 @@ public class SteamVR_LaserPointer : MonoBehaviour
     // Update is called once per frame
 	void Update ()
     {
+		Debug.Log ("laser pointer active: " + active);
         if (!isActive)
         {
             isActive = true;
@@ -137,5 +140,5 @@ public class SteamVR_LaserPointer : MonoBehaviour
             pointer.transform.localScale = new Vector3(thickness, thickness, dist);
         }
         pointer.transform.localPosition = new Vector3(0f, 0f, dist/2f);
-    }
+	}
 }
