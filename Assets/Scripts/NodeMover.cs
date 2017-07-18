@@ -14,6 +14,9 @@ public class NodeMover : MonoBehaviour {
 	}
 
 	void grabNode(object sender, ClickedEventArgs e) {
+		if (!gameObject.activeSelf)
+			return;
+		
 		Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, grabRadius);
 		grabbedObject = FindNearestNode (nearbyNodes);
 
@@ -23,6 +26,9 @@ public class NodeMover : MonoBehaviour {
 	}
 
 	void dropNode(object sender, ClickedEventArgs e) {
+		if (!gameObject.activeSelf)
+			return;
+		
 		if (grabbedObject)
 			grabbedObject.transform.parent = null;
 	}

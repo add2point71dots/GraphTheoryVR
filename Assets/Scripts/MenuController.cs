@@ -9,6 +9,7 @@ public class MenuController : MonoBehaviour {
 	private SteamVR_TrackedController rightDevice;
 	private GameObject menu;
 	private GameObject menuPointer;
+	private GameObject graphController;
 
 
 	// Use this for initialization
@@ -18,11 +19,13 @@ public class MenuController : MonoBehaviour {
 		menu = transform.Find ("Menu").gameObject;
 		menu.SetActive (false);
 		menuPointer = rightController.transform.Find("MenuLaser").gameObject;
+		graphController = rightController.transform.Find ("GraphController").gameObject;
 		device.MenuButtonClicked += ToggleMenu;
 	}
 
 	void ToggleMenu(object sender, ClickedEventArgs e) {
 		menu.SetActive (!menu.activeSelf);
 		menuPointer.SetActive (menu.activeSelf);
+		graphController.SetActive (!menu.activeSelf);
 	}
 }

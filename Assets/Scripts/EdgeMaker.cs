@@ -26,6 +26,9 @@ public class EdgeMaker : MonoBehaviour {
 	
 	// Update is called once per frame
 	void startEdge(object sender, ClickedEventArgs e) {
+		if (!gameObject.activeSelf)
+			return;
+		
 		Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, selectRadius);
 		selectedNode = FindNearestNode (nearbyNodes);
 
@@ -43,6 +46,9 @@ public class EdgeMaker : MonoBehaviour {
 	}
 
 	void endEdge(object sender, ClickedEventArgs e) {
+		if (!gameObject.activeSelf)
+			return;
+		
 		bool drawingNewEdge = true;
 		if (drawingEdge) {
 			Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, selectRadius);

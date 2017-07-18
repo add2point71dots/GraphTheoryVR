@@ -13,6 +13,9 @@ public class NodeSpawner : MonoBehaviour {
 	}
 
 	void MakeNode(object sender, ClickedEventArgs e) {
+		if (!gameObject.activeSelf)
+			return;
+		
 		Vector3 newNodePosition = nodeSpawn.position;
 
 		Collider[] nearbyNodes = Physics.OverlapSphere (newNodePosition, 0.1f);
