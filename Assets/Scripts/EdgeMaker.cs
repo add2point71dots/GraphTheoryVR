@@ -20,12 +20,10 @@ public class EdgeMaker : MonoBehaviour {
 		device.Gripped += startEdge;
 		device.Ungripped += endEdge;
 		controller = transform.gameObject;
-		Debug.Log ("CONTROLLER IS " + controller);
 	}
 	
 	// Update is called once per frame
 	void startEdge(object sender, ClickedEventArgs e) {
-		Debug.Log ("GRIPPING");
 		RaycastHit hit;
 		Ray ray = new Ray(transform.position, transform.forward);
 		if (Physics.Raycast (ray, out hit, 0.1f)) {
@@ -51,7 +49,7 @@ public class EdgeMaker : MonoBehaviour {
 		if (drawingEdge) {
 			RaycastHit hit;
 			Ray ray = new Ray(transform.position, transform.forward);
-			if (Physics.Raycast (ray, out hit, 0.1f) && edgeController.start != hit.transform && hit.transform.gameObject.tag == "Node") {
+			if (Physics.Raycast (ray, out hit, 0.1f) && edgeController.start != hit.transform.gameObject && hit.transform.gameObject.tag == "Node") {
 				endNode = hit.transform.gameObject;
 				edgeController.end = endNode;
 					
