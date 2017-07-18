@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EdgeController : MonoBehaviour {
-	public Transform start;
-	public Transform end;
+	public GameObject start;
+	public GameObject end;
 	private LineRenderer line;
 	private CapsuleCollider collider;
 
@@ -16,15 +16,15 @@ public class EdgeController : MonoBehaviour {
 		collider.isTrigger = true;
 		collider.direction = 2;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		line.SetPosition(0, start.position);
-		line.SetPosition(1, end.position);
+		line.SetPosition(0, start.transform.position);
+		line.SetPosition(1, end.transform.position);
 
-		collider.transform.position = (start.position + end.position) / 2;
+		collider.transform.position = (start.transform.position + end.transform.position) / 2;
 		collider.center = Vector3.zero;
-		collider.height = (end.position - start.position).magnitude;
-		collider.transform.LookAt (start.position);
+		collider.height = (end.transform.position - start.transform.position).magnitude;
+		collider.transform.LookAt (start.transform.position);
 	}
 }

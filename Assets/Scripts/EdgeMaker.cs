@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class EdgeMaker : MonoBehaviour {
 	private SteamVR_TrackedController device;
+	private GameObject controller;
 	public GameObject edge;
 	GameObject edgeDrawing;
 	private EdgeController edgeController;
 	private bool drawingEdge;
-	private Transform lineStart;
-	private Transform lineEnd;
 	private GameObject startNode;
 	private GameObject endNode;
 	private NodeConnections startNodeConnections;
@@ -20,6 +19,8 @@ public class EdgeMaker : MonoBehaviour {
 		device = GetComponent<SteamVR_TrackedController>();
 		device.Gripped += startEdge;
 		device.Ungripped += endEdge;
+		controller = transform.gameObject;
+		Debug.Log ("CONTROLLER IS " + controller);
 	}
 	
 	// Update is called once per frame
@@ -30,16 +31,13 @@ public class EdgeMaker : MonoBehaviour {
 		if (Physics.Raycast (ray, out hit, 0.1f)) {
 			GameObject hitObject = hit.transform.gameObject;
 			if (hitObject.tag == "Node") {
-				lineStart = hit.transform;
-				lineEnd = transform;
-
 				startNode = hitObject;
 				startNodeConnections = hitObject.GetComponent<NodeConnections> ();
 
 				edgeDrawing = Instantiate (edge);
 				edgeController = edgeDrawing.GetComponent<EdgeController> ();
-				edgeController.start = lineStart;
-				edgeController.end = lineEnd;
+				edgeController.start = startNode;
+				edgeController.end = controller;
 
 				drawingEdge = true;
 				Debug.Log ("I've hit something!");
@@ -54,10 +52,10 @@ public class EdgeMaker : MonoBehaviour {
 			RaycastHit hit;
 			Ray ray = new Ray(transform.position, transform.forward);
 			if (Physics.Raycast (ray, out hit, 0.1f) && edgeController.start != hit.transform && hit.transform.gameObject.tag == "Node") {
-				edgeController.end = hit.transform;
-
 				endNode = hit.transform.gameObject;
-				endNodeConnections = hit.transform.gameObject.GetComponent<NodeConnections> ();
+				edgeController.end = endNode;
+					
+				endNodeConnections = endNode.GetComponent<NodeConnections> ();
 
 				startNodeConnections.connectedEdges.Add (edgeDrawing);
 				endNodeConnections.connectedEdges.Add (edgeDrawing);
