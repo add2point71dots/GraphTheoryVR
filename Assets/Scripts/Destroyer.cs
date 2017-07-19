@@ -6,7 +6,7 @@ public class Destroyer : MonoBehaviour {
 	private SteamVR_TrackedController device;
 
 	void Start () {
-		device = GetComponent<SteamVR_TrackedController>();
+		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
 		device.TriggerClicked += Destroy;
 	}
 

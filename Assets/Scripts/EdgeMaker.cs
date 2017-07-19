@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EdgeMaker : MonoBehaviour {
+	public GameObject edge;
+	public float selectRadius;
 	private SteamVR_TrackedController device;
 	private GameObject controller;
-	public GameObject edge;
-	GameObject edgeDrawing;
+	private GameObject edgeDrawing;
 	private EdgeController edgeController;
 	private bool drawingEdge;
 	private GameObject startNode;
@@ -14,7 +15,7 @@ public class EdgeMaker : MonoBehaviour {
 	private NodeConnections startNodeConnections;
 	private NodeConnections endNodeConnections;
 	private GameObject selectedNode;
-	public float selectRadius;
+
 
 	void Start () {
 		drawingEdge = false;
