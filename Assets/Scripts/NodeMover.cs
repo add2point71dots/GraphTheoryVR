@@ -9,8 +9,8 @@ public class NodeMover : MonoBehaviour {
 
 	void Start () {
 		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
-		device.PadClicked += grabNode;
-		device.PadUnclicked += dropNode;
+		device.Gripped += grabNode;
+		device.Ungripped += dropNode;
 	}
 
 	void grabNode(object sender, ClickedEventArgs e) {

@@ -20,8 +20,8 @@ public class EdgeMaker : MonoBehaviour {
 	void Start () {
 		drawingEdge = false;
 		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
-		device.Gripped += startEdge;
-		device.Ungripped += endEdge;
+    device.PadClicked += startEdge;
+		device.PadUnclicked += endEdge;
 		controller = transform.gameObject;
 	}
 	
