@@ -12,6 +12,7 @@ public class MenuController : MonoBehaviour {
   private GameObject prevMode;
 	private GameObject graphController;
   private GameObject destroyController;
+  private GameObject colorController;
 
 
 	// Use this for initialization
@@ -24,7 +25,7 @@ public class MenuController : MonoBehaviour {
 		menuPointer = rightController.transform.Find("MenuLaser").gameObject;
 		graphController = rightController.transform.Find ("GraphController").gameObject;
     destroyController = rightController.transform.Find ("DestroyController").gameObject;
-  //  prevMode = graphController;
+    colorController = rightController.transform.Find ("ColorController").gameObject;
 
 		device.MenuButtonClicked += ToggleMenu;
 	}
@@ -40,6 +41,9 @@ public class MenuController : MonoBehaviour {
       } else if (destroyController.activeSelf) {
         prevMode = destroyController;
         destroyController.SetActive (false);
+      } else if (colorController.activeSelf) {
+        prevMode = colorController;
+        colorController.SetActive (false);
       }
     } else {
       prevMode.SetActive (true);

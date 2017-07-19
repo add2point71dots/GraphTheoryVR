@@ -9,12 +9,14 @@ public class MenuPointer : MonoBehaviour {
   private SteamVR_TrackedController leftDevice;
 	private GameObject graphController;
   private GameObject destroyController;
+  private GameObject colorController;
   private GameObject menu;
 
 	// Use this for initialization
 	void Start () {
 		graphController = transform.parent.Find ("GraphController").gameObject;
     destroyController = transform.parent.Find ("DestroyController").gameObject;
+    colorController = transform.parent.Find ("ColorController").gameObject;
 
     menu = leftController.transform.Find ("Menu").gameObject;
 
@@ -39,6 +41,10 @@ public class MenuPointer : MonoBehaviour {
         gameObject.SetActive (false);
       } else if (hit.transform.name == "DestroyButton") {
         destroyController.SetActive (true);
+        menu.SetActive (false);
+        gameObject.SetActive (false);
+      } else if (hit.transform.name == "ColorButton") {
+        colorController.SetActive (true);
         menu.SetActive (false);
         gameObject.SetActive (false);
       }
