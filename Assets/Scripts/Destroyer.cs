@@ -11,6 +11,9 @@ public class Destroyer : MonoBehaviour {
 	}
 
 	void Destroy(object sender, ClickedEventArgs e) {
+    if (!gameObject.activeSelf)
+      return;
+    
 		Debug.Log ("DESTROYING");
 		RaycastHit hit;
 		Ray ray = new Ray(transform.position, transform.forward);
