@@ -11,6 +11,7 @@ public class MenuPointer : MonoBehaviour {
   private GameObject destroyController;
   private GameObject colorController;
   private GameObject menu;
+  private GameObject colorPalette;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +20,7 @@ public class MenuPointer : MonoBehaviour {
     colorController = transform.parent.Find ("ColorController").gameObject;
 
     menu = leftController.transform.Find ("Menu").gameObject;
+    colorPalette = leftController.transform.Find ("ColorPalette").gameObject;
 
 		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
 		device.TriggerClicked += selectMode;
@@ -45,6 +47,7 @@ public class MenuPointer : MonoBehaviour {
         gameObject.SetActive (false);
       } else if (hit.transform.name == "ColorButton") {
         colorController.SetActive (true);
+        colorPalette.SetActive (true);
         menu.SetActive (false);
         gameObject.SetActive (false);
       }

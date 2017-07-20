@@ -8,6 +8,7 @@ public class MenuController : MonoBehaviour {
 	private SteamVR_TrackedController device;
 	private SteamVR_TrackedController rightDevice;
 	private GameObject menu;
+  private GameObject colorPalette;
 	private GameObject menuPointer;
   private GameObject prevMode;
 	private GameObject graphController;
@@ -26,6 +27,7 @@ public class MenuController : MonoBehaviour {
 		graphController = rightController.transform.Find ("GraphController").gameObject;
     destroyController = rightController.transform.Find ("DestroyController").gameObject;
     colorController = rightController.transform.Find ("ColorController").gameObject;
+    colorPalette = transform.Find ("ColorPalette").gameObject;
 
 		device.MenuButtonClicked += ToggleMenu;
 	}
@@ -44,8 +46,11 @@ public class MenuController : MonoBehaviour {
       } else if (colorController.activeSelf) {
         prevMode = colorController;
         colorController.SetActive (false);
+        colorPalette.SetActive (false);
       }
     } else {
+      if (prevMode == colorController)
+        colorPalette.SetActive(true);
       prevMode.SetActive (true);
     }
 		
