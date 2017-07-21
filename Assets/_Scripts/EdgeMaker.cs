@@ -71,6 +71,10 @@ public class EdgeMaker : MonoBehaviour {
 				endNode = selectedNode;
 				edgeController.end = endNode;
 
+				if (startNode.GetComponent<Renderer>().material.GetColor("_Color") == endNode.GetComponent<Renderer>().material.GetColor("_Color")) {
+					Debug.Log("NOT A VALID COLORING");
+				}
+
 				endNodeConnections = endNode.GetComponent<NodeConnections> ();
 
 				startNodeConnections.connectedEdges.Add (edgeDrawing);
