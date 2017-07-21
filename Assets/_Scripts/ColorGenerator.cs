@@ -15,9 +15,9 @@ public class ColorGenerator : MonoBehaviour {
     colors.Add (Color.yellow);
     colors.Add (Color.cyan);
 
-    GameObject button = Instantiate (colorButton, transform.position, transform.rotation, transform);
-    colorButtons.Add (button);
-    generateButtons ();
+ //   GameObject button = Instantiate (colorButton, transform.position, transform.rotation, transform);
+  //  colorButtons.Add (button);
+  //  generateButtons ();
 	}
 	
 	void Update () {
