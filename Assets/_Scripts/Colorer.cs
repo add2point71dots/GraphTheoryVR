@@ -44,7 +44,6 @@ public class Colorer : MonoBehaviour {
       Material adjNodeMaterial = nodeConnections.adjacentNodes [i].GetComponent<Renderer> ().material;
       if (adjNodeMaterial.GetColor ("_Color") == selectedColor && selectedColor != defaultColor) {
         Debug.Log ("NOT A VALID COLORING");
-        return;
       }
     }
     Material nodeMaterial = node.GetComponent<Renderer> ().material;
