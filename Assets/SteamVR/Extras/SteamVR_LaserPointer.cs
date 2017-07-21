@@ -87,6 +87,10 @@ public class SteamVR_LaserPointer : MonoBehaviour
             this.transform.GetChild(0).gameObject.SetActive(true);
         }
 
+        Material newMaterial = new Material(Shader.Find("Unlit/Color"));
+        newMaterial.SetColor("_Color", color);
+        pointer.GetComponent<MeshRenderer>().material = newMaterial;
+
         float dist = 100f;
 
         SteamVR_TrackedController controller = GetComponent<SteamVR_TrackedController>();

@@ -13,7 +13,6 @@ public class NodeSpawner : MonoBehaviour {
 	}
 
 	void MakeNode(object sender, ClickedEventArgs e) {
-    Debug.Log ("TRYING TO MAKE A NODE");
 		if (!gameObject.activeSelf)
 			return;
 		
