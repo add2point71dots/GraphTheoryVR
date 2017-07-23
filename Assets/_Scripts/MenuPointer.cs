@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuPointer : MonoBehaviour {
-  public GameObject leftController;
+	public GameObject leftController;
 
 	private SteamVR_TrackedController device;
-  private SteamVR_TrackedController leftDevice;
+	private SteamVR_TrackedController leftDevice;
 	private GameObject graphController;
-  private GameObject destroyController;
-  private GameObject colorController;
-  private GameObject menu;
-  private GameObject colorPalette;
+	private GameObject destroyController;
+	private GameObject colorController;
+	private TextMesh controllerLabelText;
+	private GameObject menu;
+	private GameObject colorPalette;
 
 	// Use this for initialization
 	void Start () {
 		graphController = transform.parent.Find ("GraphController").gameObject;
-    destroyController = transform.parent.Find ("DestroyController").gameObject;
-    colorController = transform.parent.Find ("ColorController").gameObject;
+		destroyController = transform.parent.Find ("DestroyController").gameObject;
+		colorController = transform.parent.Find ("ColorController").gameObject;
 
-    menu = leftController.transform.Find ("Menu").gameObject;
-    colorPalette = leftController.transform.Find ("ColorPalette").gameObject;
+		menu = leftController.transform.Find ("Menu").gameObject;
+		colorPalette = leftController.transform.Find ("ColorPalette").gameObject;
+		controllerLabelText = transform.parent.Find ("RightControllerLabel").gameObject.GetComponent<TextMesh>();
 
 		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
 		device.TriggerClicked += selectMode;
@@ -36,21 +38,24 @@ public class MenuPointer : MonoBehaviour {
 		if (Physics.Raycast (ray, out hit, 100f)) {
 			Debug.Log ("HIT NAMRE " + hit.transform.name);
 
-      if (hit.transform.name == "GraphButton") {
-        Debug.Log ("hit the graph button!");
-        graphController.SetActive (true);
-        menu.SetActive (false);
-        gameObject.SetActive (false);
-      } else if (hit.transform.name == "DestroyButton") {
-        destroyController.SetActive (true);
-        menu.SetActive (false);
-        gameObject.SetActive (false);
-      } else if (hit.transform.name == "ColorButton") {
-        colorController.SetActive (true);
-        colorPalette.SetActive (true);
-        menu.SetActive (false);
-        gameObject.SetActive (false);
-      }
+			if (hit.transform.name == "GraphButton") {
+				Debug.Log ("hit the graph button!");
+				graphController.SetActive (true);
+				controllerLabelText.text = "Graph Maker";
+				menu.SetActive (false);
+				gameObject.SetActive (false);
+			} else if (hit.transform.name == "DestroyButton") {
+				destroyController.SetActive (true);
+				menu.SetActive (false);
+				controllerLabelText.text = "Destroyer";
+				gameObject.SetActive (false);
+			} else if (hit.transform.name == "ColorButton") {
+				colorController.SetActive (true);
+				controllerLabelText.text = "Colorer";
+				colorPalette.SetActive (true);
+				menu.SetActive (false);
+				gameObject.SetActive (false);
+			}
 		}
 	}
 }
