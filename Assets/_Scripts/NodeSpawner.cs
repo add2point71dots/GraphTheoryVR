@@ -21,7 +21,8 @@ public class NodeSpawner : MonoBehaviour {
 		Collider[] nearbyNodes = Physics.OverlapSphere (newNodePosition, 0.1f);
 
 		if (nearbyNodes.Length == 0) {
-			Instantiate (node, newNodePosition, nodeSpawn.rotation);
+			GameObject newNode = Instantiate (node, newNodePosition, nodeSpawn.rotation);
+			newNode.GetComponent<AudioSource>().Play();
 		}
 	}
 }

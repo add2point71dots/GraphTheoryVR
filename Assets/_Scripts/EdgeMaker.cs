@@ -38,6 +38,8 @@ public class EdgeMaker : MonoBehaviour {
 			startNodeConnections = startNode.GetComponent<NodeConnections> ();
 
 			edgeDrawing = Instantiate (edge);
+			edgeDrawing.GetComponent<AudioSource>().Play();
+
 			edgeController = edgeDrawing.GetComponent<EdgeController> ();
 			edgeController.start = startNode;
 			edgeController.end = controller;
@@ -52,6 +54,8 @@ public class EdgeMaker : MonoBehaviour {
 		
 		bool drawingNewEdge = true;
 		if (drawingEdge) {
+			edgeDrawing.GetComponent<AudioSource>().Stop();
+
 			Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, selectRadius);
 			selectedNode = FindNearestNode (nearbyNodes);
 			GameObject[] allEdges = GameObject.FindGameObjectsWithTag ("Edge");
