@@ -15,6 +15,8 @@ public class EdgeMaker : MonoBehaviour {
 	private NodeConnections startNodeConnections;
 	private NodeConnections endNodeConnections;
 	private GameObject selectedNode;
+  public GameObject graph;
+  public ValidColoringChecker validColoringChecker;
 
 
 	void Start () {
@@ -23,6 +25,7 @@ public class EdgeMaker : MonoBehaviour {
     device.PadClicked += startEdge;
 		device.PadUnclicked += endEdge;
 		controller = transform.gameObject;
+    validColoringChecker = graph.GetComponent<ValidColoringChecker>();
 	}
 	
 	// Update is called once per frame
@@ -76,7 +79,8 @@ public class EdgeMaker : MonoBehaviour {
 				edgeController.end = endNode;
 
 				if (startNode.GetComponent<Renderer>().material.GetColor("_Color") == endNode.GetComponent<Renderer>().material.GetColor("_Color")) {
-					Debug.Log("NOT A VALID COLORING");
+          if (!validColoringChecker.badEdges.Contains (edgeDrawing))
+            validColoringChecker.badEdges.Add (edgeDrawing);
 				}
 
 				endNodeConnections = endNode.GetComponent<NodeConnections> ();
