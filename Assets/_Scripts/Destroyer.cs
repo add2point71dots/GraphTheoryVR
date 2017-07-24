@@ -5,8 +5,11 @@ using UnityEngine;
 public class Destroyer : MonoBehaviour {
   public GameObject fireball;
 	private SteamVR_TrackedController device;
+  public GameObject graph;
+  public ValidColoringChecker validColoringChecker;
 
 	void Start () {
+    validColoringChecker = graph.GetComponent<ValidColoringChecker>();
 		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
 		device.TriggerClicked += Destroy;
 	}
@@ -14,15 +17,12 @@ public class Destroyer : MonoBehaviour {
 	void Destroy(object sender, ClickedEventArgs e) {
     if (!gameObject.activeSelf)
       return;
-    
-		Debug.Log ("DESTROYING");
+
 		RaycastHit hit;
 		Ray ray = new Ray(transform.position, transform.forward);
 
 		if (Physics.Raycast (ray, out hit, 100f)) {
 			GameObject hitObj = hit.transform.gameObject;
-
-			Debug.Log ("hit is a:" + hit.transform.gameObject.GetType ());
 
 			if (hitObj.tag == "Node") {
 				NodeConnections nodeConnections = hitObj.GetComponent<NodeConnections> ();
@@ -35,6 +35,7 @@ public class Destroyer : MonoBehaviour {
 					GameObject otherNode = (startNode == hitObj) ? endNode : startNode;
 					otherNode.GetComponent<NodeConnections> ().connectedEdges.Remove (edge);
 
+          validColoringChecker.badEdges.Remove (edge);
 					Destroy (edge);
 				}
 
@@ -57,6 +58,7 @@ public class Destroyer : MonoBehaviour {
 				startNodeConnections.adjacentNodes.Remove (endNode);
 				endNodeConnections.adjacentNodes.Remove (startNode);
 
+        validColoringChecker.badEdges.Remove (hitObj);
 				Destroy (hitObj);
 			}
 		}
