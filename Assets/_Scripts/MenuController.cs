@@ -10,6 +10,8 @@ public class MenuController : MonoBehaviour {
 	private GameObject menu;
   private GameObject colorPalette;
 	private GameObject menuPointer;
+  private TextMesh controllerLabelText;
+  private string prevLabelText;
   private GameObject prevMode;
 	private GameObject graphController;
   private GameObject destroyController;
@@ -24,6 +26,7 @@ public class MenuController : MonoBehaviour {
 		menu = transform.Find ("Menu").gameObject;
 		menu.SetActive (false);
 		menuPointer = rightController.transform.Find("MenuLaser").gameObject;
+    controllerLabelText = rightController.transform.Find ("RightControllerLabel").gameObject.GetComponent<TextMesh>();
 		graphController = rightController.transform.Find ("GraphController").gameObject;
     destroyController = rightController.transform.Find ("DestroyController").gameObject;
     colorController = rightController.transform.Find ("ColorController").gameObject;
@@ -37,6 +40,9 @@ public class MenuController : MonoBehaviour {
 		menuPointer.SetActive (menu.activeSelf);
 
     if (menu.activeSelf) {
+      prevLabelText = controllerLabelText.text;
+      controllerLabelText.text = "Menu Selector";
+
       if (graphController.activeSelf) {
         prevMode = graphController;
         graphController.SetActive (false);
@@ -52,6 +58,7 @@ public class MenuController : MonoBehaviour {
       if (prevMode == colorController)
         colorPalette.SetActive(true);
       prevMode.SetActive (true);
+      controllerLabelText.text = prevLabelText;
     }
 		
 	}
