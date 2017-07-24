@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class ValidColoringChecker : MonoBehaviour {
 	public List<GameObject> badEdges;
+  public GameObject invalidColoringText;
 	
 	// Update is called once per frame
 	void Update () {
-		if (badEdges.Count > 0) {
-			Debug.Log("INVALID COLORING");
-		}
+    invalidColoringText.SetActive (badEdges.Count > 0);
 	}
 }
