@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ValidColoringChecker : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
+	public List<GameObject> badEdges;
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (badEdges.Count > 0) {
+			Debug.Log("INVALID COLORING");
+		}
 	}
 }
