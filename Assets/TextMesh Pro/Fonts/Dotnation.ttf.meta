@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 7465448b8cc3544dfaa1998c48fff830
+timeCreated: 1500929697
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Dotnation
+  fontNames:
+  - Dotnation
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
