@@ -15,6 +15,7 @@ public class EdgeMaker : MonoBehaviour {
 	private NodeConnections startNodeConnections;
 	private NodeConnections endNodeConnections;
 	private GameObject selectedNode;
+  public Color defaultColor;
   public GameObject graph;
   public ValidColoringChecker validColoringChecker;
 
@@ -78,7 +79,9 @@ public class EdgeMaker : MonoBehaviour {
 				endNode = selectedNode;
 				edgeController.end = endNode;
 
-				if (startNode.GetComponent<Renderer>().material.GetColor("_Color") == endNode.GetComponent<Renderer>().material.GetColor("_Color")) {
+        Color startColor = startNode.GetComponent<Renderer> ().material.GetColor ("_Color");
+        Color endColor = endNode.GetComponent<Renderer> ().material.GetColor ("_Color");
+        if (startColor == endColor && startColor != defaultColor && endColor != defaultColor) {
           if (!validColoringChecker.badEdges.Contains (edgeDrawing))
             validColoringChecker.badEdges.Add (edgeDrawing);
 				}
