@@ -9,6 +9,7 @@ public class Colorer : MonoBehaviour {
 	public SteamVR_LaserPointer colorLaser;
 	public GameObject graph;
 	public ValidColoringChecker validColoringChecker;
+	private AudioSource colorSound;
 
 	void Start () {
 		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
@@ -16,6 +17,7 @@ public class Colorer : MonoBehaviour {
 		colorLaser = gameObject.GetComponent<SteamVR_LaserPointer> ();
 		selectedColor = defaultColor;
 		validColoringChecker = graph.GetComponent<ValidColoringChecker>();
+		colorSound = GetComponent<AudioSource>();
 	}
 	
 	void tryColor (object sender, ClickedEventArgs e) {
@@ -44,39 +46,39 @@ public class Colorer : MonoBehaviour {
 	void ColorNode(GameObject node) {
 		NodeConnections nodeConnections = node.GetComponent<NodeConnections> ();
 
-    for (int i = 0; i < nodeConnections.adjacentNodes.Count; i++) {
-      GameObject adjNode = nodeConnections.adjacentNodes [i];
-      Material adjNodeMaterial = adjNode.GetComponent<Renderer> ().material;
+		for (int i = 0; i < nodeConnections.adjacentNodes.Count; i++) {
+			GameObject adjNode = nodeConnections.adjacentNodes [i];
+			Material adjNodeMaterial = adjNode.GetComponent<Renderer> ().material;
 
-      if (adjNodeMaterial.GetColor ("_Color") == selectedColor && selectedColor != defaultColor) {
-        Debug.Log ("NOT A VALID COLORING");
-        GameObject badEdge = null;
+			if (adjNodeMaterial.GetColor ("_Color") == selectedColor && selectedColor != defaultColor) {
+				GameObject badEdge = null;
 
-        for (int j = 0; j < nodeConnections.connectedEdges.Count; j++) {
-          GameObject edge = nodeConnections.connectedEdges [j];
+				for (int j = 0; j < nodeConnections.connectedEdges.Count; j++) {
+					GameObject edge = nodeConnections.connectedEdges [j];
 
-          if (edge.GetComponent<EdgeController> ().start == adjNode || edge.GetComponent<EdgeController> ().end == adjNode) {
-            badEdge = edge;
-            break;
-          }
-        }
+					if (edge.GetComponent<EdgeController> ().start == adjNode || edge.GetComponent<EdgeController> ().end == adjNode) {
+						badEdge = edge;
+						break;
+					}
+				}
 
-        if (!validColoringChecker.badEdges.Contains (badEdge))
-          validColoringChecker.badEdges.Add (badEdge);
-      } else {
-        GameObject goodEdge = null;
+				if (!validColoringChecker.badEdges.Contains (badEdge))
+					validColoringChecker.badEdges.Add (badEdge);
+			} else {
+				GameObject goodEdge = null;
 
-        for (int j = 0; j < nodeConnections.connectedEdges.Count; j++) {
-          GameObject edge = nodeConnections.connectedEdges [j];
+				for (int j = 0; j < nodeConnections.connectedEdges.Count; j++) {
+					GameObject edge = nodeConnections.connectedEdges [j];
 
-          if (edge.GetComponent<EdgeController> ().start == adjNode || edge.GetComponent<EdgeController> ().end == adjNode) {
-            goodEdge = edge;
-            break;
-          }
-        }
-        validColoringChecker.badEdges.Remove (goodEdge);
-      }
-    }
+					if (edge.GetComponent<EdgeController> ().start == adjNode || edge.GetComponent<EdgeController> ().end == adjNode) {
+						goodEdge = edge;
+						break;
+					}
+				}
+				validColoringChecker.badEdges.Remove (goodEdge);
+			}
+		}
+		colorSound.Play();
 		Material nodeMaterial = node.GetComponent<Renderer> ().material;
 		nodeMaterial.SetColor ("_Color", selectedColor);
 	}
