@@ -3,34 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NodeMover : MonoBehaviour {
-	private SteamVR_TrackedController device;
-	private GameObject grabbedObject;
 	public float grabRadius;
 
+	private SteamVR_TrackedController device;
+	private GameObject grabbedObject;
+	private AudioSource edgeSound;
+
 	void Start () {
+		edgeSound = GetComponent<AudioSource>();
+		edgeSound.Play();
 		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
 		device.Gripped += grabNode;
 		device.Ungripped += dropNode;
 	}
 
-	void grabNode(object sender, ClickedEventArgs e) {
+	void grabNode (object sender, ClickedEventArgs e)
+	{
 		if (!gameObject.activeSelf)
 			return;
 		
 		Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, grabRadius);
 		grabbedObject = FindNearestNode (nearbyNodes);
 
-		if (grabbedObject)
+		if (grabbedObject) {
+			edgeSound.Play();
 			grabbedObject.transform.parent = gameObject.transform.parent.transform;
+		}
 
 	}
 
-	void dropNode(object sender, ClickedEventArgs e) {
+	void dropNode (object sender, ClickedEventArgs e)
+	{
 		if (!gameObject.activeSelf)
 			return;
 		
-		if (grabbedObject)
+		if (grabbedObject) {
+			edgeSound.Stop ();
 			grabbedObject.transform.parent = null;
+		}
 	}
 
 	GameObject FindNearestNode(Collider[] nearbyNodes) {
