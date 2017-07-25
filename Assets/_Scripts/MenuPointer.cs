@@ -36,25 +36,23 @@ public class MenuPointer : MonoBehaviour {
 		Ray ray = new Ray(transform.position, transform.forward);
 
 		if (Physics.Raycast (ray, out hit, 100f)) {
-			Debug.Log ("HIT NAMRE " + hit.transform.name);
+			if (hit.transform.gameObject.tag == "Button") {
 
-			if (hit.transform.name == "GraphButton") {
-				Debug.Log ("hit the graph button!");
-				graphController.SetActive (true);
-				controllerLabelText.text = "Graph Maker";
+				if (hit.transform.name == "GraphButton") {
+					graphController.SetActive (true);
+					controllerLabelText.text = "Graph Maker";
+				} else if (hit.transform.name == "DestroyButton") {
+					destroyController.SetActive (true);
+					controllerLabelText.text = "Destroyer";
+				} else if (hit.transform.name == "ColorButton") {
+					colorController.SetActive (true);
+					controllerLabelText.text = "Colorer";
+					colorPalette.SetActive (true);
+				}
+
 				menu.SetActive (false);
 				gameObject.SetActive (false);
-			} else if (hit.transform.name == "DestroyButton") {
-				destroyController.SetActive (true);
-				menu.SetActive (false);
-				controllerLabelText.text = "Destroyer";
-				gameObject.SetActive (false);
-			} else if (hit.transform.name == "ColorButton") {
-				colorController.SetActive (true);
-				controllerLabelText.text = "Colorer";
-				colorPalette.SetActive (true);
-				menu.SetActive (false);
-				gameObject.SetActive (false);
+				hit.transform.GetComponent<AudioSource>().Play();
 			}
 		}
 	}

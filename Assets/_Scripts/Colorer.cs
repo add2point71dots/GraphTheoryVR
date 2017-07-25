@@ -39,6 +39,7 @@ public class Colorer : MonoBehaviour {
 	}
 
 	void SelectColor (GameObject button) {
+		button.GetComponentInParent<AudioSource>().Play();
 		selectedColor = button.GetComponent<Renderer> ().material.color;
 		colorLaser.color = selectedColor;
 	}
