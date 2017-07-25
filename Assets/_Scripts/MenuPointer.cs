@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class MenuPointer : MonoBehaviour {
 	public GameObject leftController;
+  public AudioClip graphSound;
+  public AudioClip destroySound;
+  public AudioClip colorSound;
+  public event System.Action<AudioClip> PlayButtonSound = delegate {};
 
 	private SteamVR_TrackedController device;
 	private SteamVR_TrackedController leftDevice;
@@ -41,18 +45,29 @@ public class MenuPointer : MonoBehaviour {
 				if (hit.transform.name == "GraphButton") {
 					graphController.SetActive (true);
 					controllerLabelText.text = "Graph Maker";
+          PlayButtonSound (graphSound);
+        //  audioSource.PlayOneShot (graphSound);
+       //   Debug.Log ("GRAPH SOUND " + graphSound.name);
 				} else if (hit.transform.name == "DestroyButton") {
 					destroyController.SetActive (true);
 					controllerLabelText.text = "Destroyer";
+          PlayButtonSound (destroySound);
 				} else if (hit.transform.name == "ColorButton") {
 					colorController.SetActive (true);
 					controllerLabelText.text = "Colorer";
 					colorPalette.SetActive (true);
+          PlayButtonSound (colorSound);
 				}
 
-				menu.SetActive (false);
-				gameObject.SetActive (false);
-				hit.transform.GetComponent<AudioSource>().Play();
+
+        AudioSource sound = hit.transform.GetComponent<AudioSource> ();
+
+        sound.Play ();
+        Debug.Log ("SOUND PLAYING? " + sound.isPlaying);
+       
+        Debug.Log (sound.clip);
+        menu.SetActive (false);
+        gameObject.SetActive (false);
 			}
 		}
 	}
