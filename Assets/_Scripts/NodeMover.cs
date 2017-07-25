@@ -26,7 +26,9 @@ public class NodeMover : MonoBehaviour {
 		grabbedObject = FindNearestNode (nearbyNodes);
 
 		if (grabbedObject) {
-			edgeSound.Play();
+			if (grabbedObject.GetComponent<NodeConnections>().connectedEdges.Count > 0)
+				edgeSound.Play();
+
 			grabbedObject.transform.parent = gameObject.transform.parent.transform;
 		}
 
@@ -38,7 +40,9 @@ public class NodeMover : MonoBehaviour {
 			return;
 		
 		if (grabbedObject) {
-			edgeSound.Stop ();
+			if (edgeSound.isPlaying)
+				edgeSound.Stop ();
+
 			grabbedObject.transform.parent = null;
 		}
 	}
