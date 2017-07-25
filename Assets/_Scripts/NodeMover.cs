@@ -7,11 +7,8 @@ public class NodeMover : MonoBehaviour {
 
 	private SteamVR_TrackedController device;
 	private GameObject grabbedObject;
-	private AudioSource edgeSound;
 
 	void Start () {
-		edgeSound = GetComponent<AudioSource>();
-		edgeSound.Play();
 		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
 		device.Gripped += grabNode;
 		device.Ungripped += dropNode;
@@ -26,8 +23,9 @@ public class NodeMover : MonoBehaviour {
 		grabbedObject = FindNearestNode (nearbyNodes);
 
 		if (grabbedObject) {
-			if (grabbedObject.GetComponent<NodeConnections>().connectedEdges.Count > 0)
-				edgeSound.Play();
+      NodeConnections nodeConnections = grabbedObject.GetComponent<NodeConnections> ();
+			if (nodeConnections.connectedEdges.Count > 0)
+        nodeConnections.connectedEdges[0].GetComponent<AudioSource>().Play();
 
 			grabbedObject.transform.parent = gameObject.transform.parent.transform;
 		}
@@ -40,8 +38,9 @@ public class NodeMover : MonoBehaviour {
 			return;
 		
 		if (grabbedObject) {
-			if (edgeSound.isPlaying)
-				edgeSound.Stop ();
+      NodeConnections nodeConnections = grabbedObject.GetComponent<NodeConnections> ();
+      if (nodeConnections.connectedEdges.Count > 0)
+        nodeConnections.connectedEdges[0].GetComponent<AudioSource>().Stop();
 
 			grabbedObject.transform.parent = null;
 		}

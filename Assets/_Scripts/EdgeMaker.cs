@@ -7,7 +7,7 @@ public class EdgeMaker : MonoBehaviour {
 	public float selectRadius;
 	public Color defaultColor;
 	public GameObject graph;
-  	public ValidColoringChecker validColoringChecker;
+  public ValidColoringChecker validColoringChecker;
 
 	private SteamVR_TrackedController device;
 	private GameObject controller;
@@ -19,15 +19,14 @@ public class EdgeMaker : MonoBehaviour {
 	private NodeConnections startNodeConnections;
 	private NodeConnections endNodeConnections;
 	private GameObject selectedNode;
-	private AudioSource edgeSound;
+
 
 
 	void Start () {
 		drawingEdge = false;
 		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
 		controller = transform.gameObject;
-    	validColoringChecker = graph.GetComponent<ValidColoringChecker>();
-		edgeSound = GetComponent<AudioSource>();
+    validColoringChecker = graph.GetComponent<ValidColoringChecker>();
 
 		device.PadClicked += startEdge;
 		device.PadUnclicked += endEdge;
@@ -46,7 +45,7 @@ public class EdgeMaker : MonoBehaviour {
 			startNodeConnections = startNode.GetComponent<NodeConnections> ();
 
 			edgeDrawing = Instantiate (edge);
-			edgeSound.Play();
+      edgeDrawing.GetComponent<AudioSource>().Play();
 
 			edgeController = edgeDrawing.GetComponent<EdgeController> ();
 			edgeController.start = startNode;
@@ -62,7 +61,7 @@ public class EdgeMaker : MonoBehaviour {
 		
 		bool drawingNewEdge = true;
 		if (drawingEdge) {
-			edgeSound.Stop();
+      edgeDrawing.GetComponent<AudioSource>().Stop();
 
 			Collider[] nearbyNodes = Physics.OverlapSphere (transform.position, selectRadius);
 			selectedNode = FindNearestNode (nearbyNodes);
