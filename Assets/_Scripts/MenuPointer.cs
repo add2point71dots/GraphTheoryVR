@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MenuPointer : MonoBehaviour {
 	public GameObject leftController;
@@ -14,7 +15,7 @@ public class MenuPointer : MonoBehaviour {
 	private GameObject graphController;
 	private GameObject destroyController;
 	private GameObject colorController;
-	private TextMesh controllerLabelText;
+	private TextMeshPro controllerLabelText;
 	private GameObject menu;
 	private GameObject colorPalette;
 
@@ -26,7 +27,7 @@ public class MenuPointer : MonoBehaviour {
 
 		menu = leftController.transform.Find ("Menu").gameObject;
 		colorPalette = leftController.transform.Find ("ColorPalette").gameObject;
-		controllerLabelText = transform.parent.Find ("RightControllerLabel").gameObject.GetComponent<TextMesh>();
+		controllerLabelText = transform.parent.Find ("RightControllerLabel").gameObject.GetComponent<TextMeshPro>();
 
 		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
 		device.TriggerClicked += selectMode;
@@ -44,28 +45,19 @@ public class MenuPointer : MonoBehaviour {
 
 				if (hit.transform.name == "GraphButton") {
 					graphController.SetActive (true);
-					controllerLabelText.text = "Graph Maker";
+					controllerLabelText.text = "graph maker";
           PlayButtonSound (graphSound);
-        //  audioSource.PlayOneShot (graphSound);
-       //   Debug.Log ("GRAPH SOUND " + graphSound.name);
 				} else if (hit.transform.name == "DestroyButton") {
 					destroyController.SetActive (true);
-					controllerLabelText.text = "Destroyer";
+					controllerLabelText.text = "destroyer";
           PlayButtonSound (destroySound);
 				} else if (hit.transform.name == "ColorButton") {
 					colorController.SetActive (true);
-					controllerLabelText.text = "Colorer";
+					controllerLabelText.text = "colorer";
 					colorPalette.SetActive (true);
           PlayButtonSound (colorSound);
 				}
 
-
-        AudioSource sound = hit.transform.GetComponent<AudioSource> ();
-
-        sound.Play ();
-        Debug.Log ("SOUND PLAYING? " + sound.isPlaying);
-       
-        Debug.Log (sound.clip);
         menu.SetActive (false);
         gameObject.SetActive (false);
 			}
