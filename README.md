@@ -24,7 +24,7 @@ If you just want to run the program:
 - Open the `GraphMaker.exe` file.
 - Start graphing!
 
-If you want to work with the code, in addition you'll need:
+If you want to clone the repo and work with the code, in addition you'll need:
 - [Unity](https://store.unity.com/) (free version works great!)
 
 You can then run Steam and SteamVR and open up the project in Unity. Hit play to start making graphs, or explore the project in the Unity editor.
