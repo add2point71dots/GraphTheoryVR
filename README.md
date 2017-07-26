@@ -19,7 +19,7 @@ You'll need a few things:
 - [SteamVR](https://steamcommunity.com/steamvr)
 
 If you just want to run the program:
-- From the releases tab, download the `GraphMaker.zip` folder and unzip it.
+- From the [releases tab](https://github.com/add2point71dots/GraphTheoryVR/releases), download the `GraphMaker.zip` folder and unzip it.
 - Make sure you have Steam and SteamVR running.
 - Open the `GraphMaker.exe` file.
 - Start graphing!
