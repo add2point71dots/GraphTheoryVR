@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Destroyer : MonoBehaviour {
-  public GameObject fireball;
+	public GameObject fireball;
+	public GameObject graph;
 	private SteamVR_TrackedController device;
-  public GameObject graph;
-  public ValidColoringChecker validColoringChecker;
+	private ValidColoringChecker validColoringChecker;
 
 	void Start () {
-    validColoringChecker = graph.GetComponent<ValidColoringChecker>();
+		validColoringChecker = graph.GetComponent<ValidColoringChecker>();
+
 		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
 		device.TriggerClicked += Destroy;
 	}
 
 	void Destroy(object sender, ClickedEventArgs e) {
-    if (!gameObject.activeSelf)
-      return;
+		if (!gameObject.activeSelf)
+			return;
 
 		RaycastHit hit;
 		Ray ray = new Ray(transform.position, transform.forward);
@@ -26,6 +27,7 @@ public class Destroyer : MonoBehaviour {
 
 			if (hitObj.tag == "Node") {
 				NodeConnections nodeConnections = hitObj.GetComponent<NodeConnections> ();
+
 				for (int i = 0; i < nodeConnections.connectedEdges.Count; i++) {
 					GameObject edge = nodeConnections.connectedEdges [i];
 
@@ -35,7 +37,7 @@ public class Destroyer : MonoBehaviour {
 					GameObject otherNode = (startNode == hitObj) ? endNode : startNode;
 					otherNode.GetComponent<NodeConnections> ().connectedEdges.Remove (edge);
 
-          validColoringChecker.badEdges.Remove (edge);
+					validColoringChecker.badEdges.Remove (edge);
 					Destroy (edge);
 				}
 
@@ -44,21 +46,22 @@ public class Destroyer : MonoBehaviour {
 					adjNodeConnections.adjacentNodes.Remove (hitObj);
 				}
 
-        Instantiate (fireball, hitObj.transform.position, hitObj.transform.rotation);
+				Instantiate (fireball, hitObj.transform.position, hitObj.transform.rotation);
 				Destroy (hitObj);
+
 			} else if (hitObj.tag == "Edge") {
 				GameObject startNode = hitObj.GetComponent<EdgeController> ().start;
 				GameObject endNode = hitObj.GetComponent<EdgeController> ().end;
+
 				NodeConnections startNodeConnections = startNode.GetComponent<NodeConnections> ();
 				NodeConnections endNodeConnections = endNode.GetComponent<NodeConnections> ();
 
 				startNodeConnections.connectedEdges.Remove (hitObj);
 				endNodeConnections.connectedEdges.Remove (hitObj);
-
 				startNodeConnections.adjacentNodes.Remove (endNode);
 				endNodeConnections.adjacentNodes.Remove (startNode);
+				validColoringChecker.badEdges.Remove (hitObj);
 
-        validColoringChecker.badEdges.Remove (hitObj);
 				Destroy (hitObj);
 			}
 		}

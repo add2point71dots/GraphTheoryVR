@@ -8,7 +8,6 @@ public class EdgeController : MonoBehaviour {
 	private LineRenderer line;
 	private CapsuleCollider collider;
 
-	// Use this for initialization
 	void Start () {
 		line = GetComponent<LineRenderer>();
 		collider = gameObject.AddComponent <CapsuleCollider> ();
@@ -17,8 +16,7 @@ public class EdgeController : MonoBehaviour {
 		collider.direction = 2;
 	}
 
-	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		line.SetPosition(0, start.transform.position);
 		line.SetPosition(1, end.transform.position);
 

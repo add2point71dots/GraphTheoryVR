@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ButtonSoundPlayer : MonoBehaviour {
-  public MenuPointer menuPointer;
-  public AudioSource audioSource;
-	// Use this for initialization
+	public MenuPointer menuPointer;
+	private AudioSource audioSource;
+
 	void Start () {
-    menuPointer.PlayButtonSound += MenuPointer_PlayButtonSound;
-    audioSource = GetComponent<AudioSource> ();
+		menuPointer.PlayButtonSound += MenuPointer_PlayButtonSound;
+		audioSource = GetComponent<AudioSource> ();
 	}
 
-  void MenuPointer_PlayButtonSound (AudioClip buttonSound) {
-    audioSource.PlayOneShot (buttonSound);
-  }
-	
+	void MenuPointer_PlayButtonSound (AudioClip buttonSound) {
+		audioSource.PlayOneShot (buttonSound);
+	}
 }

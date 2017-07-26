@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class NodeMover : MonoBehaviour {
 	public float grabRadius;
-
 	private SteamVR_TrackedController device;
 	private GameObject grabbedObject;
 
@@ -14,8 +13,7 @@ public class NodeMover : MonoBehaviour {
 		device.Ungripped += dropNode;
 	}
 
-	void grabNode (object sender, ClickedEventArgs e)
-	{
+	void grabNode (object sender, ClickedEventArgs e) {
 		if (!gameObject.activeSelf)
 			return;
 		
@@ -23,42 +21,42 @@ public class NodeMover : MonoBehaviour {
 		grabbedObject = FindNearestNode (nearbyNodes);
 
 		if (grabbedObject) {
-      NodeConnections nodeConnections = grabbedObject.GetComponent<NodeConnections> ();
-			if (nodeConnections.connectedEdges.Count > 0)
-        nodeConnections.connectedEdges[0].GetComponent<AudioSource>().Play();
-
+			NodeConnections nodeConnections = grabbedObject.GetComponent<NodeConnections> ();
 			grabbedObject.transform.parent = gameObject.transform.parent.transform;
-		}
 
+			if (nodeConnections.connectedEdges.Count > 0)
+				nodeConnections.connectedEdges[0].GetComponent<AudioSource>().Play();
+		}
 	}
 
-	void dropNode (object sender, ClickedEventArgs e)
-	{
+	void dropNode (object sender, ClickedEventArgs e) {
 		if (!gameObject.activeSelf)
 			return;
 		
 		if (grabbedObject) {
-      NodeConnections nodeConnections = grabbedObject.GetComponent<NodeConnections> ();
-      if (nodeConnections.connectedEdges.Count > 0)
-        nodeConnections.connectedEdges[0].GetComponent<AudioSource>().Stop();
-
+			NodeConnections nodeConnections = grabbedObject.GetComponent<NodeConnections> ();
 			grabbedObject.transform.parent = null;
+
+			if (nodeConnections.connectedEdges.Count > 0)
+				nodeConnections.connectedEdges[0].GetComponent<AudioSource>().Stop();
 		}
 	}
 
 	GameObject FindNearestNode(Collider[] nearbyNodes) {
 		if (nearbyNodes.Length == 0)
 			return null;
+
 		GameObject nearestNode = nearbyNodes[0].gameObject;
-		float smallestDist = 500f;
-		bool foundNode = false;
 		GameObject tempNode;
+		float smallestDist = 500f;
 		float tempDist;
+		bool foundNode = false;
 
 		for (int i = 0; i < nearbyNodes.Length; i++) {
 			if (nearbyNodes [i].tag == "Node") {
 				tempNode = nearbyNodes [i].gameObject; 
 				tempDist = (tempNode.transform.position - transform.position).sqrMagnitude;
+
 				if (tempDist < smallestDist) {
 					smallestDist = tempDist;
 					nearestNode = tempNode;
@@ -67,9 +65,9 @@ public class NodeMover : MonoBehaviour {
 			}
 		}
 
-		if (foundNode) {
+		if (foundNode)
 			return nearestNode;
-		}
+
 		return null;
 	}
 }

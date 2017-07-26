@@ -5,7 +5,6 @@ using TMPro;
 
 public class MenuController : MonoBehaviour {
 	public GameObject rightController;
-
 	private SteamVR_TrackedController device;
 	private SteamVR_TrackedController rightDevice;
 	private GameObject menu;
@@ -18,21 +17,18 @@ public class MenuController : MonoBehaviour {
 	private GameObject destroyController;
 	private GameObject colorController;
 
-
-	// Use this for initialization
 	void Start () {
-		device = GetComponent<SteamVR_TrackedController> ();
 		rightDevice = rightController.GetComponent<SteamVR_TrackedController> ();
-
-		menu = transform.Find ("Menu").gameObject;
-		menu.SetActive (false);
 		menuPointer = rightController.transform.Find("MenuLaser").gameObject;
 		controllerLabelText = rightController.transform.Find ("RightControllerLabel").gameObject.GetComponent<TextMeshPro>();
 		graphController = rightController.transform.Find ("GraphController").gameObject;
 		destroyController = rightController.transform.Find ("DestroyController").gameObject;
 		colorController = rightController.transform.Find ("ColorController").gameObject;
 		colorPalette = transform.Find ("ColorPalette").gameObject;
+		menu = transform.Find ("Menu").gameObject;
+		menu.SetActive (false);
 
+		device = GetComponent<SteamVR_TrackedController> ();
 		device.MenuButtonClicked += ToggleMenu;
 	}
 
@@ -40,7 +36,7 @@ public class MenuController : MonoBehaviour {
 		menu.SetActive (!menu.activeSelf);
 		menuPointer.SetActive (menu.activeSelf);
 
-	    if (menu.activeSelf) {
+		if (menu.activeSelf) {
 			prevLabelText = controllerLabelText.text;
 			controllerLabelText.text = "Menu Selector";
 

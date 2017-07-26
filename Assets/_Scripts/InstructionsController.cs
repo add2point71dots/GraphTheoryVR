@@ -6,7 +6,6 @@ public class InstructionsController : MonoBehaviour {
 	public GameObject instructions;
 	private SteamVR_TrackedController device;
 
-	// Use this for initialization
 	void Start () {
 		device = GetComponent<SteamVR_TrackedController> ();
 		device.MenuButtonClicked += ToggleInstructions;

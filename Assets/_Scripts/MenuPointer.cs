@@ -5,11 +5,10 @@ using TMPro;
 
 public class MenuPointer : MonoBehaviour {
 	public GameObject leftController;
-  public AudioClip graphSound;
-  public AudioClip destroySound;
-  public AudioClip colorSound;
-  public event System.Action<AudioClip> PlayButtonSound = delegate {};
-
+	public AudioClip graphSound;
+	public AudioClip destroySound;
+	public AudioClip colorSound;
+	public event System.Action<AudioClip> PlayButtonSound = delegate {};
 	private SteamVR_TrackedController device;
 	private SteamVR_TrackedController leftDevice;
 	private GameObject graphController;
@@ -19,7 +18,6 @@ public class MenuPointer : MonoBehaviour {
 	private GameObject menu;
 	private GameObject colorPalette;
 
-	// Use this for initialization
 	void Start () {
 		graphController = transform.parent.Find ("GraphController").gameObject;
 		destroyController = transform.parent.Find ("DestroyController").gameObject;
@@ -46,20 +44,20 @@ public class MenuPointer : MonoBehaviour {
 				if (hit.transform.name == "GraphButton") {
 					graphController.SetActive (true);
 					controllerLabelText.text = "graph maker";
-          PlayButtonSound (graphSound);
+					PlayButtonSound (graphSound);
 				} else if (hit.transform.name == "DestroyButton") {
 					destroyController.SetActive (true);
 					controllerLabelText.text = "destroyer";
-          PlayButtonSound (destroySound);
+					PlayButtonSound (destroySound);
 				} else if (hit.transform.name == "ColorButton") {
 					colorController.SetActive (true);
 					controllerLabelText.text = "colorer";
 					colorPalette.SetActive (true);
-          PlayButtonSound (colorSound);
+					PlayButtonSound (colorSound);
 				}
 
-        menu.SetActive (false);
-        gameObject.SetActive (false);
+				menu.SetActive (false);
+				gameObject.SetActive (false);
 			}
 		}
 	}

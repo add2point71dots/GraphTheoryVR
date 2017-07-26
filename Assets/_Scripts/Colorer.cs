@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Colorer : MonoBehaviour {
-	private SteamVR_TrackedController device;
-	public Color selectedColor;
-	public Color defaultColor;
-	public SteamVR_LaserPointer colorLaser;
+public class Colorer : MonoBehaviour {	
 	public GameObject graph;
-	public ValidColoringChecker validColoringChecker;
+	public Color defaultColor;
+	private Color selectedColor;
+	private SteamVR_LaserPointer colorLaser;
+	private ValidColoringChecker validColoringChecker;
+	private SteamVR_TrackedController device;
 	private AudioSource colorSound;
 
 	void Start () {
-		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
-		device.TriggerClicked += tryColor;
 		colorLaser = gameObject.GetComponent<SteamVR_LaserPointer> ();
 		selectedColor = defaultColor;
 		validColoringChecker = graph.GetComponent<ValidColoringChecker>();
 		colorSound = GetComponent<AudioSource>();
+
+		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
+		device.TriggerClicked += tryColor;
 	}
 	
 	void tryColor (object sender, ClickedEventArgs e) {

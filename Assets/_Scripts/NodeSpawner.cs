@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NodeSpawner : MonoBehaviour {
-	private SteamVR_TrackedController device;
 	public GameObject node;
 	public Transform nodeSpawn;
+	private SteamVR_TrackedController device;
 
 	void Start() {
 		device = gameObject.GetComponentInParent<SteamVR_TrackedController>();
@@ -17,7 +17,6 @@ public class NodeSpawner : MonoBehaviour {
 			return;
 		
 		Vector3 newNodePosition = nodeSpawn.position;
-
 		Collider[] nearbyNodes = Physics.OverlapSphere (newNodePosition, 0.1f);
 
 		if (nearbyNodes.Length == 0) {
