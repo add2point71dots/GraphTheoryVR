@@ -5,10 +5,10 @@ using TMPro;
 
 public class MenuController : MonoBehaviour {
 	public GameObject rightController;
+  public GameObject colorPalette;
 	private SteamVR_TrackedController device;
 	private SteamVR_TrackedController rightDevice;
 	private GameObject menu;
-	private GameObject colorPalette;
 	private GameObject menuPointer;
 	private TextMeshPro controllerLabelText;
 	private string prevLabelText;
@@ -24,7 +24,6 @@ public class MenuController : MonoBehaviour {
 		graphController = rightController.transform.Find ("GraphController").gameObject;
 		destroyController = rightController.transform.Find ("DestroyController").gameObject;
 		colorController = rightController.transform.Find ("ColorController").gameObject;
-		colorPalette = transform.Find ("ColorPalette").gameObject;
 		menu = transform.Find ("Menu").gameObject;
 		menu.SetActive (false);
 
@@ -38,7 +37,7 @@ public class MenuController : MonoBehaviour {
 
 		if (menu.activeSelf) {
 			prevLabelText = controllerLabelText.text;
-			controllerLabelText.text = "Menu Selector";
+			controllerLabelText.text = "selector";
 
 			if (graphController.activeSelf) {
 				prevMode = graphController;
