@@ -1,6 +1,6 @@
 # Virtual Reality Graph Maker
 
-##### Capstone Project for Ada Developer's Academy
+##### Capstone Project for Ada Developers Academy
 
 ### What is it?
 
